@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NotasApp</string>
+    <string name="todo">botón</string>
+    <string name="agregar_notas">Agregar Notas.</string>
+    <string name="ingrese_titulo">Ingrese un título</string>
+    <string name="ingrese_descripcion">Ingrese la descripción</string>
 </resources>
