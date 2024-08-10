@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -33,8 +34,14 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
             put(COLUMN_TITLE, note.title)
             put(COLUMN_CONTENT, note.content)
         }
-        db.insert(TABLE_NAME, null, values)
+        val result = db.insert(TABLE_NAME, null, values)
         db.close()
+
+        if (result == -1L) {
+            Log.e("DB_ERROR", "Error al insertar la nota")
+        } else {
+            Log.d("DB_SUCCESS", "Nota insertada con éxito, ID: $result")
+        }
     }
 
     fun getAllNotes() : List<Note> {
