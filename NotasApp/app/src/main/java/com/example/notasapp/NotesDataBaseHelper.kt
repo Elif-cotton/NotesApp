@@ -2,6 +2,7 @@ package com.example.notasapp
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
@@ -61,5 +62,32 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
         cursor.close()
         db.close()
         return notesList
+    }
+
+    fun updateNote(note: Note){
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_TITLE, note.title)
+            put(COLUMN_CONTENT, note.content)
+        }
+        val whereClause = "$COLUMN_ID = ?"
+        val whereArgs = arrayOf(note.id.toString())
+        db.update(TABLE_NAME, values, whereClause, whereArgs)
+        db.close()
+    }
+
+    fun getNoteById(noteId:Int):Note{
+        val db = readableDatabase
+        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = $noteId"
+        val cursor = db.rawQuery(query, null)
+        cursor.moveToNext()
+
+        val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+        val title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE))
+        val content = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTENT))
+
+        cursor.close()
+        db.close()
+        return Note(id, title, content)
     }
 }

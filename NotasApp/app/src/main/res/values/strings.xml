@@ -7,4 +7,5 @@
     <string name="notas">Notas.</string>
     <string name="titulo">Título</string>
     <string name="contenido">Contenido</string>
+    <string name="editar_notas">Editar notas</string>
 </resources>
